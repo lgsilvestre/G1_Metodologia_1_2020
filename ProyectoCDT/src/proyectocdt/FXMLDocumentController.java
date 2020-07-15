@@ -18,6 +18,10 @@
 package proyectocdt;
 
 import animatefx.animation.*;
+import com.sun.javafx.font.FontFactory;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -34,6 +38,8 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -107,13 +113,18 @@ public class FXMLDocumentController implements Initializable {
     AnchorPane controldp;
     @FXML
     AnchorPane helpdp;
-    
+    @FXML
+    Text objetivo;
     private int pAct=0;
     private int idCanvas=0;
     private int start=0;
     
+    
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) {                
+        Font aux = Font.loadFont(FXMLDocumentController.class.getResource("Michella Garden.otf").toExternalForm(), 18);              
+        objetivo.setFont(aux);
+        objetivo.setText("Test");
     }   
     
     public void changeCanvas(){

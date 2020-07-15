@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="base" maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" styleClass="base" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.241" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectocdt.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="base" maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" styleClass="base" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectocdt.FXMLDocumentController">
    <children>
       <AnchorPane fx:id="baseCanvas" layoutX="10.0" layoutY="10.0" maxHeight="400.0" maxWidth="780.0" minHeight="400.0" minWidth="780.0" prefHeight="400.0" prefWidth="780.0" styleClass="baseCanvas" stylesheets="@../style/style.css">
          <children>
@@ -97,6 +97,7 @@
                   </AnchorPane>
                </children>
             </GridPane>
+            <Text fx:id="objetivo" layoutX="353.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="wenaText" />
          </children>
       </AnchorPane>
       <Button fx:id="chars" layoutX="38.0" layoutY="457.0" mnemonicParsing="false" onAction="#showChars" prefHeight="45.0" prefWidth="100.0" stylesheets="@../style/style.css" text="Símbolos">
