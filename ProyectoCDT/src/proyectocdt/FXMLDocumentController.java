@@ -34,12 +34,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -119,6 +121,8 @@ public class FXMLDocumentController implements Initializable {
     Text objetivo;
     @FXML 
     TextField textoEntrada;
+    @FXML 
+    TextField grados;
     
     private int pAct=0;
     private int idCanvas=0;
@@ -127,9 +131,8 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {                
-        Font aux = Font.loadFont(FXMLDocumentController.class.getResource("Michella Garden.otf").toExternalForm(), 18);              
-        objetivo.setFont(aux);
-        objetivo.setText("Test");
+        Font plumon = Font.loadFont(FXMLDocumentController.class.getResource("Michella Garden.otf").toExternalForm(), 36);        
+        objetivo.setFont(plumon);        
     }   
     
     public void changeCanvas(){
@@ -223,15 +226,34 @@ public class FXMLDocumentController implements Initializable {
         this.helpdp.setVisible(true);
         this.pAct=4;
     }
-    
+
     /**
-        * Muestra el texto al mismo tiempo que se escribe en el campo de texto
-        * @param event 
-        */
-       @FXML
-       public void mostrarTextField(KeyEvent event){
-           String txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario
-           this.canvas.getGraphicsContext2D().fillText(txt, pAct, pAct); //mostrar texto en vivo en canvas
-           System.out.println(""+txt+""); //mostrar texto en vivo en consola
-       }    
+    * Muestra el texto al mismo tiempo que se escribe en el campo de texto
+    * @param event 
+    */
+    @FXML
+    public void mostrarTextField(KeyEvent event){
+       String txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario
+       //this.canvas.getGraphicsContext2D().fillText(txt, pAct, pAct); //mostrar texto en vivo en canvas
+       objetivo.setText(txt);
+       System.out.println(""+txt+""); //mostrar texto en vivo en consola
+    }    
+
+    @FXML
+    public void cambiarColor(MouseEvent event){
+        Font tiza = Font.loadFont(FXMLDocumentController.class.getResource("tiza.ttf").toExternalForm(), 36);
+        Font plumon = Font.loadFont(FXMLDocumentController.class.getResource("Michella Garden.otf").toExternalForm(), 36);              
+        if (this.objetivo.getFill()==Color.WHITE){
+             this.objetivo.setFill(Color.BLACK);
+             this.objetivo.setFont(plumon);  
+        }else{
+             objetivo.setFont(tiza);                
+             objetivo.setFill(Color.WHITE);               
+        }                   
+    }
+    
+    @FXML
+    public void rotar(MouseEvent event){   
+        this.objetivo.setRotate(Double.parseDouble(grados.getText()));
+    }
 }
