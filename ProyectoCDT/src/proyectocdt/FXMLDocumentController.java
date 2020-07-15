@@ -123,6 +123,8 @@ public class FXMLDocumentController implements Initializable {
     TextField textoEntrada;
     @FXML 
     TextField grados;
+    @FXML
+    TextField userXY;
     
     private int pAct=0;
     private int idCanvas=0;
@@ -255,5 +257,12 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public void rotar(MouseEvent event){   
         this.objetivo.setRotate(Double.parseDouble(grados.getText()));
+    }
+    
+    @FXML
+    public void trasladar(MouseEvent event){
+        String[] coordenadas = userXY.getText().split(",");
+        this.objetivo.setTranslateX(Integer.parseInt(coordenadas[0]));
+        this.objetivo.setTranslateY(Integer.parseInt(coordenadas[1]));
     }
 }
