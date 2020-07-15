@@ -31,7 +31,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -115,6 +117,9 @@ public class FXMLDocumentController implements Initializable {
     AnchorPane helpdp;
     @FXML
     Text objetivo;
+    @FXML 
+    TextField textoEntrada;
+    
     private int pAct=0;
     private int idCanvas=0;
     private int start=0;
@@ -218,4 +223,15 @@ public class FXMLDocumentController implements Initializable {
         this.helpdp.setVisible(true);
         this.pAct=4;
     }
+    
+    /**
+        * Muestra el texto al mismo tiempo que se escribe en el campo de texto
+        * @param event 
+        */
+       @FXML
+       public void mostrarTextField(KeyEvent event){
+           String txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario
+           this.canvas.getGraphicsContext2D().fillText(txt, pAct, pAct); //mostrar texto en vivo en canvas
+           System.out.println(""+txt+""); //mostrar texto en vivo en consola
+       }    
 }
