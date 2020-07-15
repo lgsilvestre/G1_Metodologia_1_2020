@@ -1,0 +1,96 @@
+.base{
+    -fx-background-color: #096EB2;
+}
+
+#change{
+    -fx-background-color: #173c61;
+    -fx-background-radius: 0 0 5 5;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #F5F5F5;
+    -fx-font-weight: bold;
+    -fx-font-size: 10px;
+}
+
+#chars, #control{
+    -fx-background-color: 
+        linear-gradient(#ffd65b, #e68400),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 30 10 10 30;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-padding: 0 0 0 0;
+}
+
+#help, #text{
+    -fx-background-color: 
+        linear-gradient(#ffd65b, #e68400),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 10 30 30 10;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-padding: 0 0 0 0;
+}
+
+#rotar, #reverse, #controlPoints,
+#fda, #fdc, #cda, #cdc, #csa, #csc, #tp{
+    -fx-background-color: 
+        linear-gradient(#ffd65b, #e68400),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 10 10 10 10;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-padding: 0 0 0 0;
+}
+#trasladar{
+    -fx-background-color: 
+        linear-gradient(#ffd65b, #e68400),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 10 10 10 10;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 25px;
+    -fx-padding: 0 0 0 0;
+}
+
+#dp11, #dp21, #dp31, #dp41{
+    -fx-background-color: 
+        linear-gradient(#4d4c4c 0%, #4d4c4c 10%, #4d4c4c 100%),
+        linear-gradient(from 0% 0% to 0% 10%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 10 0 0 0;
+}
+
+#dp12, #dp22, #dp32, #dp42{
+    -fx-background-color: 
+        linear-gradient(#dcdcdc, #dcdcdc),
+        linear-gradient(from 0% 0% to 0% 10%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 0 10 0 0;
+}
+
+#baseCanvas{
+    -fx-background-color: white; 
+    -fx-background-size: 100% 100%; 
+    -fx-background-radius: 10px;
+    -fx-border-color: #173c61;
+    -fx-border-width: 5px;
+    -fx-border-radius: 10 10 10 0;
+    -fx-background-radius: 15;
+}
