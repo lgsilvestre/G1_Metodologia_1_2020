@@ -125,6 +125,10 @@ public class FXMLDocumentController implements Initializable {
     TextField grados;
     @FXML
     TextField userXY;
+    @FXML
+    TextField textoAntiguo = new TextField();
+    @FXML
+    TextField textoNuevo = new TextField();
     
     private int pAct=0;
     private int idCanvas=0;
@@ -204,6 +208,7 @@ public class FXMLDocumentController implements Initializable {
              animation = new SlideOutDown(this.helpdp);
              animation.play();
         }
+        textoAntiguo.setText(textoEntrada.getText()); //Muestra texto de manera simultanea en el cuadro de texto "texto antiguo" en pestaña control
         new SlideInUp(this.controldp).play();
         this.controldp.setVisible(true);
         this.pAct=3;
@@ -238,6 +243,7 @@ public class FXMLDocumentController implements Initializable {
        String txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario
        //this.canvas.getGraphicsContext2D().fillText(txt, pAct, pAct); //mostrar texto en vivo en canvas
        objetivo.setText(txt);
+       textoNuevo.setText(invertirFrase(txt)); // si se escribe en la pestaña edicion, se actualiza en vivo la frase invertida en texto nuevo
        System.out.println(""+txt+""); //mostrar texto en vivo en consola
     }    
 
@@ -264,5 +270,64 @@ public class FXMLDocumentController implements Initializable {
         String[] coordenadas = userXY.getText().split(",");
         this.objetivo.setTranslateX(Integer.parseInt(coordenadas[0]));
         this.objetivo.setTranslateY(Integer.parseInt(coordenadas[1]));
+    }
+    /**
+     * Muestra el texto ingresado en "texto antiguo" en vivo,
+     * luego de invertirse y mostrandolo en "texto nuevo"
+     * @param event 
+     */
+    @FXML
+    public void mostrarTextoInvertido(KeyEvent event){
+        String txt = textoAntiguo.getText();
+        txt = invertirFrase(txt);
+        textoNuevo.setText(txt);
+    }
+    /**
+     * Al usar esta funcion acepta el cambio de invertir la frase
+     * mostrandola en el canvas
+     * @param event 
+     */
+    @FXML
+    public void invertir(MouseEvent event){
+        objetivo.setText(textoNuevo.getText());// cambia el texto mostrado
+        /*  actualiza cuadros de texto luego de invertir
+        hasta ahora el cuadro "texto" en edicion,"texto antiguo" y 
+        "texto nuevo" en control    */
+        String txt = textoAntiguo.getText();
+        textoAntiguo.setText(textoNuevo.getText());
+        textoNuevo.setText(txt);
+        textoEntrada.setText(textoAntiguo.getText());
+    }
+    /**
+     * cambia la ubicacion de las palabras ingresadas en la frase
+     * de modo que quede invertida
+     * @param s String que contiene la frase a invertir
+     * @return 
+     */
+    private String invertirFrase(String s){
+        String txt = s+' ';
+        String frase = "";
+        String palabra;
+        int count = 0;
+        // cuenta las palabras que hay separadas por un espacio ' '
+        for (int i = 0; i < txt.length(); i++) {
+            if (txt.charAt(i) == ' ') {
+                count++;
+            }
+        }
+        if (count > 1) {
+            int fin;
+            count--;
+            // invierte el texto, guardandolo en el String "frase"
+            for (int i = count; i >= 0; i--) {
+                fin = txt.indexOf(' ')+1;
+                palabra = txt.substring(0, fin);
+                frase = palabra+frase;
+                txt = txt.replaceFirst(palabra, "");
+            }
+            return frase.substring(0, frase.lastIndexOf(' '));
+        }else{
+            return txt.substring(0, txt.lastIndexOf(' '));
+        }
     }
 }
