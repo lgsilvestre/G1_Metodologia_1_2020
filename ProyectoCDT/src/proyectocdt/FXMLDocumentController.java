@@ -129,6 +129,8 @@ public class FXMLDocumentController implements Initializable {
     TextField textoAntiguo = new TextField();
     @FXML
     TextField textoNuevo = new TextField();
+    @FXML
+    TextField textoSimbolo = new TextField();
     
     private int pAct=0;
     private int idCanvas=0;
@@ -138,7 +140,7 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {                
         Font plumon = Font.loadFont(FXMLDocumentController.class.getResource("Michella Garden.otf").toExternalForm(), 36);        
-        objetivo.setFont(plumon);        
+        objetivo.setFont(plumon);
     }   
     
     public void changeCanvas(){
@@ -158,10 +160,12 @@ public class FXMLDocumentController implements Initializable {
         if (this.pAct==2){
             animation = new SlideOutDown(this.textdp);
             animation.play();
+            textoSimbolo.setText(textoEntrada.getText()); //muestra de manera simultanea el texto en la pestaña simbolo que las demas
         }
         if (this.pAct==3){
             animation = new SlideOutDown(this.controldp);
             animation.play();
+            textoSimbolo.setText(textoAntiguo.getText()); //muestra de manera simultanea el texto en la pestaña simbolo que las demas
         }
         if (this.pAct==4){
              animation = new SlideOutDown(this.helpdp);
@@ -179,10 +183,12 @@ public class FXMLDocumentController implements Initializable {
         if (this.pAct==1){
              animation = new SlideOutDown(this.charsdp);
              animation.play();
+             textoEntrada.setText(textoSimbolo.getText());//muestra de manera simultanea el texto en la pestaña simbolo que las demas
         }
         if (this.pAct==3){
              animation = new SlideOutDown(this.controldp);
              animation.play();
+             textoEntrada.setText(textoAntiguo.getText()); // muestra texto de manera simultanea en el cuadro de texto "texto" en pestaña texto
         }
         if (this.pAct==4){
              animation = new SlideOutDown(this.helpdp);
@@ -199,16 +205,17 @@ public class FXMLDocumentController implements Initializable {
         if (this.pAct==1){
              animation = new SlideOutDown(this.charsdp);
              animation.play();
+             textoAntiguo.setText(textoSimbolo.getText()); //muestra de manera simultanea el texto en la pestaña simbolo que las demas
         }
         if (this.pAct==2){
              animation = new SlideOutDown(this.textdp);
              animation.play();
+             textoAntiguo.setText(textoEntrada.getText()); //Muestra texto de manera simultanea en el cuadro de texto "texto antiguo" en pestaña control
         }
         if (this.pAct==4){
              animation = new SlideOutDown(this.helpdp);
              animation.play();
         }
-        textoAntiguo.setText(textoEntrada.getText()); //Muestra texto de manera simultanea en el cuadro de texto "texto antiguo" en pestaña control
         new SlideInUp(this.controldp).play();
         this.controldp.setVisible(true);
         this.pAct=3;
@@ -240,7 +247,14 @@ public class FXMLDocumentController implements Initializable {
     */
     @FXML
     public void mostrarTextField(KeyEvent event){
-       String txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario
+        String txt="";
+        if (this.pAct==1) { //pestaña de simbolos
+            txt = this.textoSimbolo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
+        }
+        if (this.pAct==2) { // pestaña de edicion
+            txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario en la pestaña edicion
+        }
+       //String txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario
        //this.canvas.getGraphicsContext2D().fillText(txt, pAct, pAct); //mostrar texto en vivo en canvas
        objetivo.setText(txt);
        textoNuevo.setText(invertirFrase(txt)); // si se escribe en la pestaña edicion, se actualiza en vivo la frase invertida en texto nuevo
@@ -279,6 +293,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public void mostrarTextoInvertido(KeyEvent event){
         String txt = textoAntiguo.getText();
+        objetivo.setText(txt); // muestra en la pizarra el cambio al escribir en textoAtiguo
         txt = invertirFrase(txt);
         textoNuevo.setText(txt);
     }
