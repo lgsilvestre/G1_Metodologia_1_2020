@@ -58,7 +58,7 @@
                         <Font name="Calibri Bold" size="14.0" />
                      </font>
                   </Button>
-                  <TextField layoutX="17.0" layoutY="21.0" prefHeight="40.0" prefWidth="381.0" promptText="Texto">
+                  <TextField fx:id="textoSimbolo" layoutX="17.0" layoutY="21.0" onAction="#mostrarTextField" onKeyReleased="#mostrarTextField" prefHeight="40.0" prefWidth="381.0" promptText="Texto">
                      <font>
                         <Font name="Comic Sans MS Bold" size="18.0" />
                      </font>
