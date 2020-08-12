@@ -345,4 +345,53 @@ public class FXMLDocumentController implements Initializable {
             return txt.substring(0, txt.lastIndexOf(' '));
         }
     }
+    /**
+     * ingresa caracteres mediante la presion de un boton al cuadro de texto
+     * se obtiene la posicion del cursor donde se ingresara el simbolo
+     * para luego separar el String en dos partes y luego añadirlo
+     * se utiliza el metodo ingresarSimbolo(String, int, String)
+     * @param event 
+     */
+    @FXML
+    public void ingresarSimbolos(MouseEvent event){
+        String txt = textoSimbolo.getText();
+        int pos = textoSimbolo.getCaretPosition(); // posicion donde esta el cursor para escribir
+        if (fda.isPressed()) { // boton <<
+            txt = ingresarSimbolo(txt, pos, "<<");
+        }
+        if (fdc.isPressed()) { // boton >>
+            txt = ingresarSimbolo(txt, pos, ">>");
+        }
+        if (cda.isPressed()) { // boton “
+            txt = ingresarSimbolo(txt, pos, "“");
+        }
+        if (cdc.isPressed()) { // boton ”
+            txt = ingresarSimbolo(txt, pos, "”");
+        }
+        if (csa.isPressed()) { // boton ‘
+            txt = ingresarSimbolo(txt, pos, "‘");
+        }
+        if (csc.isPressed()) { // boton ’
+            txt = ingresarSimbolo(txt, pos, "’");
+        }
+        if (tp.isPressed()) { // boton ...
+            txt = ingresarSimbolo(txt, pos, "...");
+        }
+        textoSimbolo.setText(txt);
+        textoNuevo.setText(invertirFrase(txt)); // muestra de forma dinamica la frase invertida en el cuadro textoNuevo en la pestaña Control
+        objetivo.setText(textoSimbolo.getText());
+    }
+    /**separa el String en dos para añadir el simbolo que se quiera
+     * 
+     * @param txt String que contiene el texto que aparece en el cuadro de texto textoSimbolo
+     * @param pos posicion del cursor donde se quiere ingresar el simbolo, obtenido del metodo textoSimbolo.getCaretPosition()
+     * @param ch simbolo a añadir al texto
+     * @return String con el simbolo ingresado en la posicion solicitada
+     */
+    private String ingresarSimbolo(String txt, int pos, String ch){
+        String parteInicial, parteFinal;
+        parteInicial = txt.substring(0, pos);
+        parteFinal = txt.substring(pos, txt.length());
+        return parteInicial+ch+parteFinal;
+    }
 }
