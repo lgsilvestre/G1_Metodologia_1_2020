@@ -126,6 +126,12 @@ public class FXMLDocumentController implements Initializable {
     TextField grados;
     @FXML
     TextField userXY;
+    @FXML
+    TextField textoAntiguo = new TextField();
+    @FXML
+    TextField textoNuevo = new TextField();
+    @FXML
+    TextField textoSimbolo = new TextField();
     
     private int pAct=0;
     private int idCanvas=0;
@@ -135,7 +141,7 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {                
         Font plumon = Font.loadFont(FXMLDocumentController.class.getResource("Michella Garden.otf").toExternalForm(), 36);        
-        objetivo.setFont(plumon);        
+        objetivo.setFont(plumon);
     }   
     
     public void changeCanvas(){
@@ -155,10 +161,12 @@ public class FXMLDocumentController implements Initializable {
         if (this.pAct==2){
             animation = new SlideOutDown(this.textdp);
             animation.play();
+            textoSimbolo.setText(textoEntrada.getText()); //muestra de manera simultanea el texto en la pestaña simbolo que las demas
         }
         if (this.pAct==3){
             animation = new SlideOutDown(this.controldp);
             animation.play();
+            textoSimbolo.setText(textoAntiguo.getText()); //muestra de manera simultanea el texto en la pestaña simbolo que las demas
         }
         if (this.pAct==4){
              animation = new SlideOutDown(this.helpdp);
@@ -176,10 +184,12 @@ public class FXMLDocumentController implements Initializable {
         if (this.pAct==1){
              animation = new SlideOutDown(this.charsdp);
              animation.play();
+             textoEntrada.setText(textoSimbolo.getText());//muestra de manera simultanea el texto en la pestaña simbolo que las demas
         }
         if (this.pAct==3){
              animation = new SlideOutDown(this.controldp);
              animation.play();
+             textoEntrada.setText(textoAntiguo.getText()); // muestra texto de manera simultanea en el cuadro de texto "texto" en pestaña texto
         }
         if (this.pAct==4){
              animation = new SlideOutDown(this.helpdp);
@@ -196,10 +206,12 @@ public class FXMLDocumentController implements Initializable {
         if (this.pAct==1){
              animation = new SlideOutDown(this.charsdp);
              animation.play();
+             textoAntiguo.setText(textoSimbolo.getText()); //muestra de manera simultanea el texto en la pestaña simbolo que las demas
         }
         if (this.pAct==2){
              animation = new SlideOutDown(this.textdp);
              animation.play();
+             textoAntiguo.setText(textoEntrada.getText()); //Muestra texto de manera simultanea en el cuadro de texto "texto antiguo" en pestaña control
         }
         if (this.pAct==4){
              animation = new SlideOutDown(this.helpdp);
@@ -236,9 +248,17 @@ public class FXMLDocumentController implements Initializable {
     */
     @FXML
     public void mostrarTextField(KeyEvent event){
-       String txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario
+        String txt="";
+        if (this.pAct==1) { //pestaña de simbolos
+            txt = this.textoSimbolo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
+        }
+        if (this.pAct==2) { // pestaña de edicion
+            txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario en la pestaña edicion
+        }
+       //String txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario
        //this.canvas.getGraphicsContext2D().fillText(txt, pAct, pAct); //mostrar texto en vivo en canvas
        objetivo.setText(txt);
+       textoNuevo.setText(invertirFrase(txt)); // si se escribe en la pestaña edicion, se actualiza en vivo la frase invertida en texto nuevo
        //System.out.println(""+txt+""); //mostrar texto en vivo en consola
     }    
     
@@ -288,5 +308,114 @@ public class FXMLDocumentController implements Initializable {
         
         this.objetivo.setTranslateX(ejeX);
         this.objetivo.setTranslateY(ejeY);
+    }
+    /**
+     * Muestra el texto ingresado en "texto antiguo" en vivo,
+     * luego de invertirse y mostrandolo en "texto nuevo"
+     * @param event 
+     */
+    @FXML
+    public void mostrarTextoInvertido(KeyEvent event){
+        String txt = textoAntiguo.getText();
+        objetivo.setText(txt); // muestra en la pizarra el cambio al escribir en textoAtiguo
+        txt = invertirFrase(txt);
+        textoNuevo.setText(txt);
+    }
+    /**
+     * Al usar esta funcion acepta el cambio de invertir la frase
+     * mostrandola en el canvas
+     * @param event 
+     */
+    @FXML
+    public void invertir(MouseEvent event){
+        objetivo.setText(textoNuevo.getText());// cambia el texto mostrado
+        /*  actualiza cuadros de texto luego de invertir
+        hasta ahora el cuadro "texto" en edicion,"texto antiguo" y 
+        "texto nuevo" en control    */
+        String txt = textoAntiguo.getText();
+        textoAntiguo.setText(textoNuevo.getText());
+        textoNuevo.setText(txt);
+        textoEntrada.setText(textoAntiguo.getText());
+    }
+    /**
+     * cambia la ubicacion de las palabras ingresadas en la frase
+     * de modo que quede invertida
+     * @param s String que contiene la frase a invertir
+     * @return 
+     */
+    private String invertirFrase(String s){
+        String txt = s+' ';
+        String frase = "";
+        String palabra;
+        int count = 0;
+        // cuenta las palabras que hay separadas por un espacio ' '
+        for (int i = 0; i < txt.length(); i++) {
+            if (txt.charAt(i) == ' ') {
+                count++;
+            }
+        }
+        if (count > 1) {
+            int fin;
+            count--;
+            // invierte el texto, guardandolo en el String "frase"
+            for (int i = count; i >= 0; i--) {
+                fin = txt.indexOf(' ')+1;
+                palabra = txt.substring(0, fin);
+                frase = palabra+frase;
+                txt = txt.replaceFirst(palabra, "");
+            }
+            return frase.substring(0, frase.lastIndexOf(' '));
+        }else{
+            return txt.substring(0, txt.lastIndexOf(' '));
+        }
+    }
+    /**
+     * ingresa caracteres mediante la presion de un boton al cuadro de texto
+     * se obtiene la posicion del cursor donde se ingresara el simbolo
+     * para luego separar el String en dos partes y luego añadirlo
+     * se utiliza el metodo ingresarSimbolo(String, int, String)
+     * @param event 
+     */
+    @FXML
+    public void ingresarSimbolos(MouseEvent event){
+        String txt = textoSimbolo.getText();
+        int pos = textoSimbolo.getCaretPosition(); // posicion donde esta el cursor para escribir
+        if (fda.isPressed()) { // boton <<
+            txt = ingresarSimbolo(txt, pos, "<<");
+        }
+        if (fdc.isPressed()) { // boton >>
+            txt = ingresarSimbolo(txt, pos, ">>");
+        }
+        if (cda.isPressed()) { // boton “
+            txt = ingresarSimbolo(txt, pos, "“");
+        }
+        if (cdc.isPressed()) { // boton ”
+            txt = ingresarSimbolo(txt, pos, "”");
+        }
+        if (csa.isPressed()) { // boton ‘
+            txt = ingresarSimbolo(txt, pos, "‘");
+        }
+        if (csc.isPressed()) { // boton ’
+            txt = ingresarSimbolo(txt, pos, "’");
+        }
+        if (tp.isPressed()) { // boton ...
+            txt = ingresarSimbolo(txt, pos, "...");
+        }
+        textoSimbolo.setText(txt);
+        textoNuevo.setText(invertirFrase(txt)); // muestra de forma dinamica la frase invertida en el cuadro textoNuevo en la pestaña Control
+        objetivo.setText(textoSimbolo.getText());
+    }
+    /**separa el String en dos para añadir el simbolo que se quiera
+     * 
+     * @param txt String que contiene el texto que aparece en el cuadro de texto textoSimbolo
+     * @param pos posicion del cursor donde se quiere ingresar el simbolo, obtenido del metodo textoSimbolo.getCaretPosition()
+     * @param ch simbolo a añadir al texto
+     * @return String con el simbolo ingresado en la posicion solicitada
+     */
+    private String ingresarSimbolo(String txt, int pos, String ch){
+        String parteInicial, parteFinal;
+        parteInicial = txt.substring(0, pos);
+        parteFinal = txt.substring(pos, txt.length());
+        return parteInicial+ch+parteFinal;
     }
 }

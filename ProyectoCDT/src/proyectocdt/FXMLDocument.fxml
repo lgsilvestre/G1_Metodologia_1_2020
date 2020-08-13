@@ -53,42 +53,42 @@
             </AnchorPane>
             <AnchorPane fx:id="dp12" layoutX="72.0" prefHeight="178.0" prefWidth="411.0">
                <children>
-                  <Button fx:id="fda" alignment="CENTER" cache="true" cacheShape="false" centerShape="false" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="17.0" layoutY="84.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" scaleShape="false" snapToPixel="false" text="«">
+                  <Button fx:id="fda" alignment="CENTER" cache="true" cacheShape="false" centerShape="false" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="17.0" layoutY="84.0" mnemonicParsing="false" onMousePressed="#ingresarSimbolos" prefHeight="30.0" prefWidth="82.0" scaleShape="false" snapToPixel="false" text="«">
                      <font>
                         <Font name="Calibri Bold" size="14.0" />
                      </font>
                   </Button>
-                  <TextField layoutX="17.0" layoutY="21.0" prefHeight="40.0" prefWidth="381.0" promptText="Texto">
+                  <TextField fx:id="textoSimbolo" layoutX="17.0" layoutY="21.0" onAction="#mostrarTextField" onKeyReleased="#mostrarTextField" prefHeight="40.0" prefWidth="381.0" promptText="Texto">
                      <font>
                         <Font name="Comic Sans MS Bold" size="18.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="fdc" alignment="CENTER" cache="true" cacheShape="false" centerShape="false" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="119.0" layoutY="84.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" scaleShape="false" snapToPixel="false" text="»">
+                  <Button fx:id="fdc" alignment="CENTER" cache="true" cacheShape="false" centerShape="false" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="119.0" layoutY="84.0" mnemonicParsing="false" onMousePressed="#ingresarSimbolos" prefHeight="30.0" prefWidth="82.0" scaleShape="false" snapToPixel="false" text="»">
                      <font>
                         <Font name="Calibri Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="cda" alignment="CENTER" cache="true" cacheShape="false" centerShape="false" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="213.0" layoutY="84.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" scaleShape="false" snapToPixel="false" text="“">
+                  <Button fx:id="cda" alignment="CENTER" cache="true" cacheShape="false" centerShape="false" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="213.0" layoutY="84.0" mnemonicParsing="false" onMousePressed="#ingresarSimbolos" prefHeight="30.0" prefWidth="82.0" scaleShape="false" snapToPixel="false" text="“">
                      <font>
                         <Font name="Calibri Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="cdc" alignment="CENTER" cache="true" cacheShape="false" centerShape="false" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="312.0" layoutY="84.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" scaleShape="false" snapToPixel="false" text="”">
+                  <Button fx:id="cdc" alignment="CENTER" cache="true" cacheShape="false" centerShape="false" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="312.0" layoutY="84.0" mnemonicParsing="false" onMousePressed="#ingresarSimbolos" prefHeight="30.0" prefWidth="82.0" scaleShape="false" snapToPixel="false" text="”">
                      <font>
                         <Font name="Calibri Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="csa" alignment="CENTER" cache="true" cacheShape="false" centerShape="false" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="64.0" layoutY="133.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" scaleShape="false" snapToPixel="false" text="‘">
+                  <Button fx:id="csa" alignment="CENTER" cache="true" cacheShape="false" centerShape="false" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="64.0" layoutY="133.0" mnemonicParsing="false" onMousePressed="#ingresarSimbolos" prefHeight="30.0" prefWidth="82.0" scaleShape="false" snapToPixel="false" text="‘">
                      <font>
                         <Font name="Calibri Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="csc" alignment="CENTER" cache="true" cacheShape="false" centerShape="false" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="166.0" layoutY="133.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" scaleShape="false" snapToPixel="false" text="’">
+                  <Button fx:id="csc" alignment="CENTER" cache="true" cacheShape="false" centerShape="false" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="166.0" layoutY="133.0" mnemonicParsing="false" onMousePressed="#ingresarSimbolos" prefHeight="30.0" prefWidth="82.0" scaleShape="false" snapToPixel="false" text="’">
                      <font>
                         <Font name="Calibri Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="tp" alignment="CENTER" cache="true" cacheShape="false" centerShape="false" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="263.0" layoutY="133.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" scaleShape="false" snapToPixel="false" text="...">
+                  <Button fx:id="tp" alignment="CENTER" cache="true" cacheShape="false" centerShape="false" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="263.0" layoutY="133.0" mnemonicParsing="false" onMousePressed="#ingresarSimbolos" prefHeight="30.0" prefWidth="82.0" scaleShape="false" snapToPixel="false" text="...">
                      <font>
                         <Font name="Calibri Bold" size="14.0" />
                      </font>
@@ -169,7 +169,7 @@
             </AnchorPane>
             <AnchorPane fx:id="dp32" layoutX="72.0" prefHeight="178.0" prefWidth="411.0">
                <children>
-                  <TextField layoutX="116.0" layoutY="11.0" prefHeight="40.0" prefWidth="281.0" promptText="Texto Antiguo">
+                  <TextField fx:id="textoAntiguo" layoutX="116.0" layoutY="11.0" onAction="#mostrarTextoInvertido" onKeyReleased="#mostrarTextoInvertido" prefHeight="40.0" prefWidth="281.0" promptText="Texto Antiguo">
                      <font>
                         <Font name="Comic Sans MS Bold" size="14.0" />
                      </font>
@@ -179,7 +179,7 @@
                         <Font name="Comic Sans MS" size="16.0" />
                      </font>
                   </Text>
-                  <TextField editable="false" layoutX="116.0" layoutY="66.0" prefHeight="40.0" prefWidth="281.0" promptText="Texto Nuevo">
+                  <TextField fx:id="textoNuevo" editable="false" layoutX="116.0" layoutY="66.0" prefHeight="40.0" prefWidth="281.0" promptText="Texto Nuevo">
                      <font>
                         <Font name="Comic Sans MS Bold" size="14.0" />
                      </font>
@@ -189,7 +189,7 @@
                         <Font name="Comic Sans MS" size="16.0" />
                      </font>
                   </Text>
-                  <Button fx:id="reverse" layoutX="33.0" layoutY="123.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="157.0" text="Voltear Frase" />
+                  <Button fx:id="reverse" layoutX="33.0" layoutY="123.0" mnemonicParsing="false" onMouseClicked="#invertir" prefHeight="40.0" prefWidth="157.0" text="Voltear Frase" />
                   <Button fx:id="controlPoints" layoutX="226.0" layoutY="123.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="157.0" text="Puntos de Control" />
                </children>
             </AnchorPane>
