@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -242,7 +243,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     /**
-    * Muestra el texto al mismo tiempo que se escribe en el campo de texto
+    * Permite mostrar el texto al mismo tiempo que se escribe en el campo de texto
     * @param event 
     */
     @FXML
@@ -258,9 +259,13 @@ public class FXMLDocumentController implements Initializable {
        //this.canvas.getGraphicsContext2D().fillText(txt, pAct, pAct); //mostrar texto en vivo en canvas
        objetivo.setText(txt);
        textoNuevo.setText(invertirFrase(txt)); // si se escribe en la pestaña edicion, se actualiza en vivo la frase invertida en texto nuevo
-       System.out.println(""+txt+""); //mostrar texto en vivo en consola
+       //System.out.println(""+txt+""); //mostrar texto en vivo en consola
     }    
-
+    
+    /**
+     * Permite cambia color y estilo del texto (tiza / plumon)
+     * @param event 
+     */
     @FXML
     public void cambiarColor(MouseEvent event){
         Font tiza = Font.loadFont(FXMLDocumentController.class.getResource("tiza.ttf").toExternalForm(), 36);
@@ -274,16 +279,35 @@ public class FXMLDocumentController implements Initializable {
         }                   
     }
     
+    /**
+     * Permite rotar la frase ingresada entre 0 y 360 grados.
+     * @param event 
+     */
     @FXML
-    public void rotar(MouseEvent event){   
-        this.objetivo.setRotate(Double.parseDouble(grados.getText()));
+    public void rotar(MouseEvent event){
+        double gradosUser = Double.parseDouble(grados.getText());
+        
+        //Limitacion de los grados a ingresar
+        if(gradosUser >= 0 && gradosUser <= 360){
+            this.objetivo.setRotate(gradosUser);
+        }
+        else{
+            //Deberiamos agregar un mensaje para el usuario del "porque no rota"
+        }
     }
     
+    /**
+     * Permite trasladar la frase ingresada
+     * @param event 
+     */
     @FXML
     public void trasladar(MouseEvent event){
         String[] coordenadas = userXY.getText().split(",");
-        this.objetivo.setTranslateX(Integer.parseInt(coordenadas[0]));
-        this.objetivo.setTranslateY(Integer.parseInt(coordenadas[1]));
+        int ejeX = Integer.parseInt(coordenadas[0]);
+        int ejeY = Integer.parseInt(coordenadas[1]);
+        
+        this.objetivo.setTranslateX(ejeX);
+        this.objetivo.setTranslateY(ejeY);
     }
     /**
      * Muestra el texto ingresado en "texto antiguo" en vivo,
