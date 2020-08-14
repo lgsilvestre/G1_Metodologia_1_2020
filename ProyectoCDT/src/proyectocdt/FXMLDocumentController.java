@@ -53,6 +53,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -150,6 +151,8 @@ public class FXMLDocumentController implements Initializable {
     TextField textoSimbolo = new TextField();
     @FXML
     TextField textoExpresion = new TextField();
+    @FXML
+    Circle circle;
     
     private int pAct=0;
     private int idCanvas=0;
@@ -169,7 +172,8 @@ public class FXMLDocumentController implements Initializable {
         Font plumon = Font.loadFont(FXMLDocumentController.class.getResource("Michella Garden.otf").toExternalForm(), 36);
         objetivo.setFont(plumon);
         this.dividirText(objetivo.getText());
-        
+        circle.setLayoutX(objetivo.getLayoutX()-1);
+        circle.setLayoutY(objetivo.getLayoutY()-1);
     }   
     
     public void changeCanvas(){
@@ -369,6 +373,10 @@ public class FXMLDocumentController implements Initializable {
                 objetivo.setRotate(preGrados);
                 popUp("ERROR", "Sobrepasa los bordes");
             }
+            else{
+                circle.setLayoutX(objetivo.getBoundsInParent().getMinX());
+                circle.setLayoutY(objetivo.getBoundsInParent().getMinY());
+            }
         }
         else{
             popUp("ERROR","Los grados deben ser entre 0 y 360");
@@ -484,6 +492,11 @@ public class FXMLDocumentController implements Initializable {
                 popUp("ERROR", "Sobrepasa los bordes");
                 this.objetivo.setLayoutX(preEjeX);
                 this.objetivo.setLayoutY(preEjeY);
+            }
+            
+            else{
+                circle.setLayoutX(objetivo.getLayoutX()-1);
+                circle.setLayoutY(objetivo.getLayoutY()-1);
             }
         }
     }
@@ -671,4 +684,48 @@ public class FXMLDocumentController implements Initializable {
         return txt;
     }
     
+    @FXML
+    private void arrastrarPalabra(MouseEvent event){
+        circle.setLayoutX(event.getSceneX());
+        circle.setLayoutY(event.getSceneY());
+        
+        objetivo.setLayoutX(circle.getLayoutX());
+        objetivo.setLayoutY(circle.getLayoutY());
+        if (objetivo.getRotate()==0.0 || objetivo.getRotate()==180.0) {
+            if (event.getSceneX()<10 || event.getSceneX()+objetivo.getBoundsInParent().getWidth()>775) {
+                circle.setLayoutX(342);
+                circle.setLayoutY(192);
+
+                objetivo.setLayoutX(circle.getLayoutX());
+                objetivo.setLayoutY(circle.getLayoutY());
+                popUp("ERROR", "Sobrepasa los bordes");
+            }
+            if (event.getSceneY()<10 || event.getSceneY()+objetivo.getBoundsInParent().getHeight()>400) {
+                circle.setLayoutX(342);
+                circle.setLayoutY(192);
+
+                objetivo.setLayoutX(circle.getLayoutX());
+                objetivo.setLayoutY(circle.getLayoutY());
+                popUp("ERROR", "Sobrepasa los bordes");
+            }
+        }
+        else{
+            if (event.getSceneX()<10 || event.getSceneX()+objetivo.getBoundsInParent().getWidth()>775) {
+                circle.setLayoutX(342);
+                circle.setLayoutY(192);
+
+                objetivo.setLayoutX(circle.getLayoutX());
+                objetivo.setLayoutY(circle.getLayoutY());
+                popUp("ERROR", "Sobrepasa los bordes");
+            }
+            if (event.getSceneY()<10 || event.getSceneY()+(int)(2*objetivo.getBoundsInParent().getHeight()/3)>400) {
+                circle.setLayoutX(342);
+                circle.setLayoutY(192);
+
+                objetivo.setLayoutX(circle.getLayoutX());
+                objetivo.setLayoutY(circle.getLayoutY());
+                popUp("ERROR", "Sobrepasa los bordes");
+            }
+        }
+    }
 }
