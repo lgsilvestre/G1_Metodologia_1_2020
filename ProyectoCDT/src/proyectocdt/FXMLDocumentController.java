@@ -267,9 +267,13 @@ public class FXMLDocumentController implements Initializable {
 
         if (this.pAct==1) { //pestaña de simbolos
             txt = this.textoSimbolo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
+            textoSimbolo = verificarFrase(textoSimbolo, textoSimbolo.getCaretPosition()-1,event);
+                txt = this.textoSimbolo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
         }
         if (this.pAct==2) { // pestaña de edicion
             txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario en la pestaña edicion
+            textoEntrada = verificarFrase(textoEntrada, textoEntrada.getCaretPosition()-1,event);
+            txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
             this.expresion = this.textoExpresion.getText().split(","); //captura la expresion que ingresa el usuario
             //Test en consola que captura las expresiones por palabras
             for(int i=0; i<this.expresion.length; i++){
@@ -283,24 +287,7 @@ public class FXMLDocumentController implements Initializable {
        textoNuevo.setText(invertirFrase(txt)); // si se escribe en la pestaña edicion, se actualiza en vivo la frase invertida en texto nuevo
        //System.out.println(""+txt+""); //mostrar texto en vivo en consola
        this.dividirText(txt);       
-    }    
-            if (this.pAct==1) { //pestaña de simbolos
-                txt = this.textoSimbolo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
-                textoSimbolo = verificarFrase(textoSimbolo, textoSimbolo.getCaretPosition()-1,event);
-                txt = this.textoSimbolo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
-            }
-            if (this.pAct==2) { // pestaña de edicion
-                txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario en la pestaña edicion
-                textoEntrada = verificarFrase(textoEntrada, textoEntrada.getCaretPosition()-1,event);
-                txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
-            }
-           //String txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario
-           //this.canvas.getGraphicsContext2D().fillText(txt, pAct, pAct); //mostrar texto en vivo en canvas
-           objetivo.setText(txt);
-           textoNuevo.setText(invertirFrase(txt)); // si se escribe en la pestaña edicion, se actualiza en vivo la frase invertida en texto nuevo
-           //System.out.println(""+txt+""); //mostrar texto en vivo en consola
     }
-    
     /**
      * Permite dividir el texto
      * @param texto
