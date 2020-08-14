@@ -203,7 +203,6 @@ public class FXMLDocumentController implements Initializable {
         new SlideInUp(this.charsdp).play();
         this.charsdp.setVisible(true);
         this.pAct=1;
-
     }
     
     @FXML
@@ -610,6 +609,7 @@ public class FXMLDocumentController implements Initializable {
         textoNuevo.setText(invertirFrase(txt)); // muestra de forma dinamica la frase invertida en el cuadro textoNuevo en la pestaña Control
         objetivo.setText(textoSimbolo.getText());
         this.dividirText(objetivo.getText());
+        textoSimbolo.positionCaret(textoSimbolo.getText().length());
     }
     /**separa el String en dos para añadir el simbolo que se quiera
      * 
