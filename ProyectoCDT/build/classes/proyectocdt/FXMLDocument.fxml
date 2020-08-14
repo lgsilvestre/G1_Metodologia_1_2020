@@ -111,7 +111,7 @@
             <AnchorPane fx:id="dp22" layoutX="72.0" prefHeight="178.0" prefWidth="411.0">
                <children>
                   <Button fx:id="trasladar" layoutX="342.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#trasladar" prefHeight="40.0" prefWidth="55.0" text="⎆" />
-                  <TextField fx:id="textoEntrada" layoutX="87.0" layoutY="11.0" onAction="#mostrarTextField" onKeyReleased="#mostrarTextField" prefHeight="40.0" prefWidth="310.0" promptText="Texto">
+                  <TextField fx:id="textoEntrada" layoutX="87.0" layoutY="11.0" onKeyReleased="#mostrarTextField" prefHeight="40.0" prefWidth="310.0" promptText="Texto">
                      <font>
                         <Font name="Comic Sans MS Bold" size="14.0" />
                      </font>

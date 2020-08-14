@@ -19,7 +19,9 @@ package proyectocdt;
 
 import animatefx.animation.*;
 import com.sun.javafx.font.FontFactory;
+import java.awt.AWTException;
 import java.awt.GraphicsEnvironment;
+import java.awt.Robot;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.InputStream;
@@ -38,6 +40,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -261,27 +264,37 @@ public class FXMLDocumentController implements Initializable {
     * @param event 
     */
     @FXML
+
     public void mostrarTextField(KeyEvent event){
         String txt="";
-
-        if (this.pAct==1) { //pestaña de simbolos
-            txt = this.textoSimbolo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
+        int max = 30;
+        
+        if (this.textoEntrada.getText().length()>max){
+                        
+            if (!event.getCode().equals(KeyCode.BACK_SPACE)) {
+                popUp("ALERTA","Maximo "+max+" caracteres, Ingrese nuevo texto");
+                this.textoEntrada.setEditable(false);
+            }
+            else{
+                this.textoEntrada.setEditable(true);
+            }
         }
+        
+        if (this.pAct==1) //pestaña de simbolos
+            txt = this.textoSimbolo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
+            
         if (this.pAct==2) { // pestaña de edicion
             txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario en la pestaña edicion
             this.expresion = this.textoExpresion.getText().split(","); //captura la expresion que ingresa el usuario
             //Test en consola que captura las expresiones por palabras
-            for(int i=0; i<this.expresion.length; i++){
+            /*for(int i=0; i<this.expresion.length; i++){
                 int n = i+1;
                 System.out.println("Expresion Palabra "+n+": "+this.expresion[i]);
-            }
+            }*/
         }
-       //String txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario
-       //this.canvas.getGraphicsContext2D().fillText(txt, pAct, pAct); //mostrar texto en vivo en canvas
        objetivo.setText(txt);
        textoNuevo.setText(invertirFrase(txt)); // si se escribe en la pestaña edicion, se actualiza en vivo la frase invertida en texto nuevo
-       //System.out.println(""+txt+""); //mostrar texto en vivo en consola
-       this.dividirText(txt);       
+       this.dividirText(txt);     
     }    
     
     /**
@@ -483,7 +496,7 @@ public class FXMLDocumentController implements Initializable {
         final Stage dialog = new Stage();                      
         dialog.setTitle(title);
         VBox dialogVbox = new VBox(20);
-        Text msj = new Text("/ ! \\  "+menssaje+"  / ! \\");
+        Text msj = new Text(" !!!  "+menssaje+"  !!!");
         msj.setScaleX(1.5);
         msj.setScaleY(1.2);
         dialogVbox.getChildren().add(msj);
