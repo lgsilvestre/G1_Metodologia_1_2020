@@ -121,7 +121,7 @@
                         <Font name="Comic Sans MS" size="16.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="86.0" layoutY="66.0" prefHeight="40.0" prefWidth="310.0" promptText="Expresion">
+                  <TextField fx:id="textoExpresion" layoutX="86.0" layoutY="66.0" onKeyReleased="#mostrarTextField" prefHeight="40.0" prefWidth="310.0" promptText="Expresion">
                      <font>
                         <Font name="Comic Sans MS Bold" size="14.0" />
                      </font>

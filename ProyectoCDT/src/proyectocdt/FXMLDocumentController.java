@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -140,10 +139,14 @@ public class FXMLDocumentController implements Initializable {
     TextField textoNuevo = new TextField();
     @FXML
     TextField textoSimbolo = new TextField();
+    @FXML
+    TextField textoExpresion = new TextField();
     
     private int pAct=0;
     private int idCanvas=0;
     private int start=0;
+    private ArrayList<Text> palabras = new ArrayList<>();
+    private String[] expresion;
     
     
     ArrayList<String> fraseDividida = new ArrayList<>();
@@ -259,11 +262,18 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public void mostrarTextField(KeyEvent event){
         String txt="";
+
         if (this.pAct==1) { //pestaña de simbolos
             txt = this.textoSimbolo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
         }
         if (this.pAct==2) { // pestaña de edicion
             txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario en la pestaña edicion
+            this.expresion = this.textoExpresion.getText().split(","); //captura la expresion que ingresa el usuario
+            //Test en consola que captura las expresiones por palabras
+            for(int i=0; i<this.expresion.length; i++){
+                int n = i+1;
+                System.out.println("Expresion Palabra "+n+": "+this.expresion[i]);
+            }
         }
        //String txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario
        //this.canvas.getGraphicsContext2D().fillText(txt, pAct, pAct); //mostrar texto en vivo en canvas
@@ -301,7 +311,11 @@ public class FXMLDocumentController implements Initializable {
         }else{
              objetivo.setFont(tiza);                
              objetivo.setFill(Color.WHITE);               
-        }   
+        }  
+        for(int i=0; i<this.expresion.length; i++){
+            int n = i+1;
+            System.out.println("Expresion Palabra "+n+": "+this.expresion[i]);
+        }
     }
     
     /**
