@@ -155,6 +155,7 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {                
         Font plumon = Font.loadFont(FXMLDocumentController.class.getResource("Michella Garden.otf").toExternalForm(), 36);        
         objetivo.setFont(plumon);
+        this.dividirText(objetivo.getText());
     }   
     
     public void changeCanvas(){
@@ -280,7 +281,7 @@ public class FXMLDocumentController implements Initializable {
        objetivo.setText(txt);
        textoNuevo.setText(invertirFrase(txt)); // si se escribe en la pestaña edicion, se actualiza en vivo la frase invertida en texto nuevo
        //System.out.println(""+txt+""); //mostrar texto en vivo en consola
-       
+       this.dividirText(txt);       
     }    
     
     /**
@@ -288,9 +289,8 @@ public class FXMLDocumentController implements Initializable {
      * @param texto
     */
     public void dividirText(String texto){
- 
+        this.fraseDividida.clear();
         String[] palabras = texto.split(" ");
-
         for(int i =0; i < palabras.length; i++ ){
             fraseDividida.add(palabras[i]);
             fraseDividida.add(" ");
@@ -316,6 +316,7 @@ public class FXMLDocumentController implements Initializable {
             int n = i+1;
             System.out.println("Expresion Palabra "+n+": "+this.expresion[i]);
         }
+        this.dividirText(objetivo.getText());
     }
     
     /**
@@ -359,6 +360,7 @@ public class FXMLDocumentController implements Initializable {
         objetivo.setText(txt); // muestra en la pizarra el cambio al escribir en textoAtiguo
         txt = invertirFrase(txt);
         textoNuevo.setText(txt);
+        this.dividirText(objetivo.getText());
     }
     /**
      * Al usar esta funcion acepta el cambio de invertir la frase
@@ -375,6 +377,7 @@ public class FXMLDocumentController implements Initializable {
         textoAntiguo.setText(textoNuevo.getText());
         textoNuevo.setText(txt);
         textoEntrada.setText(textoAntiguo.getText());
+        this.dividirText(objetivo.getText());
     }
     /**
      * cambia la ubicacion de las palabras ingresadas en la frase
@@ -443,6 +446,7 @@ public class FXMLDocumentController implements Initializable {
         textoSimbolo.setText(txt);
         textoNuevo.setText(invertirFrase(txt)); // muestra de forma dinamica la frase invertida en el cuadro textoNuevo en la pestaña Control
         objetivo.setText(textoSimbolo.getText());
+        this.dividirText(objetivo.getText());
     }
     /**separa el String en dos para añadir el simbolo que se quiera
      * 
@@ -458,6 +462,22 @@ public class FXMLDocumentController implements Initializable {
         return parteInicial+ch+parteFinal;
     }
     
+    @FXML
+    public void puntoControl(MouseEvent event){
+        if(this.fraseDividida.isEmpty())
+            this.popUp("Error", "No existe Texto");
+        else{
+            char punto = '/';
+            String resultado = String.valueOf(punto);                
+            for (int i = 0; i < this.fraseDividida.size(); i++) {
+                if(i%2==0)
+                    resultado += this.fraseDividida.get(i);     
+                else
+                    resultado += String.valueOf(punto);   
+            }
+            this.objetivo.setText(resultado);
+        }        
+    }
     
     public void popUp(String title, String menssaje) {
         final Stage dialog = new Stage();                      
@@ -474,6 +494,7 @@ public class FXMLDocumentController implements Initializable {
         dialog.setAlwaysOnTop(true);
         dialog.initModality(Modality.APPLICATION_MODAL);
         Toolkit.getDefaultToolkit().beep();
-        dialog.show();        
-    }  
+        dialog.show();                
+    }       
+ 
 }

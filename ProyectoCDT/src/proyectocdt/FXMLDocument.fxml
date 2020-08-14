@@ -190,7 +190,7 @@
                      </font>
                   </Text>
                   <Button fx:id="reverse" layoutX="33.0" layoutY="123.0" mnemonicParsing="false" onMouseClicked="#invertir" prefHeight="40.0" prefWidth="157.0" text="Voltear Frase" />
-                  <Button fx:id="controlPoints" layoutX="226.0" layoutY="123.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="157.0" text="Puntos de Control" />
+                  <Button fx:id="controlPoints" layoutX="226.0" layoutY="123.0" mnemonicParsing="false" onMousePressed="#puntoControl" prefHeight="40.0" prefWidth="157.0" text="Puntos de Control" />
                </children>
             </AnchorPane>
          </children>
