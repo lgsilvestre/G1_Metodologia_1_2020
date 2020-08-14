@@ -39,6 +39,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Glow;
+import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -52,9 +54,13 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.web.HTMLEditor;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.fxmisc.richtext.CodeArea;
 
 /**
  *
@@ -151,14 +157,19 @@ public class FXMLDocumentController implements Initializable {
     private ArrayList<Text> palabras = new ArrayList<>();
     private String[] expresion;
     
-    
+    private int ejeX;
+    private int ejeY;
+    private int preEjeX;
+    private int preEjeY;
+    private double preGrados;
     ArrayList<String> fraseDividida = new ArrayList<>();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {                
-        Font plumon = Font.loadFont(FXMLDocumentController.class.getResource("Michella Garden.otf").toExternalForm(), 36);        
+        Font plumon = Font.loadFont(FXMLDocumentController.class.getResource("Michella Garden.otf").toExternalForm(), 36);
         objetivo.setFont(plumon);
         this.dividirText(objetivo.getText());
+        
     }   
     
     public void changeCanvas(){
@@ -268,7 +279,7 @@ public class FXMLDocumentController implements Initializable {
     public void mostrarTextField(KeyEvent event){
         String txt="";
         int max = 30;
-        
+        String preTexto = objetivo.getText();
         if (this.textoEntrada.getText().length()>max){
                         
             if (!event.getCode().equals(KeyCode.BACK_SPACE)) {
@@ -296,10 +307,18 @@ public class FXMLDocumentController implements Initializable {
                 System.out.println("Expresion Palabra "+n+": "+this.expresion[i]);
             }*/
         }
-       objetivo.setText(txt);
-       textoNuevo.setText(invertirFrase(txt)); // si se escribe en la pestaña edicion, se actualiza en vivo la frase invertida en texto nuevo
-       //System.out.println(""+txt+""); //mostrar texto en vivo en consola
-       this.dividirText(txt);       
+        objetivo.setText(txt);
+        if (!verificarBordes()) {
+            popUp("ERROR", "Sobrepasa los bordes");
+            objetivo.setText(preTexto);
+            textoEntrada.setText(preTexto);
+            textoEntrada.positionCaret(preTexto.length());
+        }
+        else{
+            textoNuevo.setText(invertirFrase(txt)); // si se escribe en la pestaña edicion, se actualiza en vivo la frase invertida en texto nuevo
+        }
+        //System.out.println(""+txt+""); //mostrar texto en vivo en consola
+        this.dividirText(txt);       
     }
     /**
      * Permite dividir el texto
@@ -329,10 +348,10 @@ public class FXMLDocumentController implements Initializable {
              objetivo.setFont(tiza);                
              objetivo.setFill(Color.WHITE);               
         }  
-        for(int i=0; i<this.expresion.length; i++){
-            int n = i+1;
-            System.out.println("Expresion Palabra "+n+": "+this.expresion[i]);
-        }
+//        for(int i=0; i<this.expresion.length; i++){
+//            int n = i+1;
+//            System.out.println("Expresion Palabra "+n+": "+this.expresion[i]);
+//        }
         this.dividirText(objetivo.getText());
     }
     
@@ -343,14 +362,103 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public void rotar(MouseEvent event){
         double gradosUser = Double.parseDouble(grados.getText());
-        
+        preGrados = objetivo.getRotate();
         //Limitacion de los grados a ingresar
         if(gradosUser >= 0 && gradosUser <= 360){
             this.objetivo.setRotate(gradosUser);
+            if (!verificarRotar(1)) {
+                objetivo.setRotate(preGrados);
+                popUp("ERROR", "Sobrepasa los bordes");
+            }
         }
         else{
             popUp("ERROR","Los grados deben ser entre 0 y 360");
         }
+    }
+    
+    public boolean verificarRotar(int a){
+        boolean bandera = true;
+        if (this.objetivo.getBoundsInParent().getMinX()<5) {
+            if (a==1) {
+                objetivo.setRotate(preGrados);
+            }
+            else{
+                objetivo.setLayoutX(preEjeX);
+            }
+            bandera = false;
+        }
+        if (this.objetivo.getBoundsInParent().getMinX()>775) {
+            if (a==1) {
+                objetivo.setRotate(preGrados);
+            }
+            else{
+                objetivo.setLayoutX(preEjeX);
+            }
+            bandera = false;
+        }
+                
+        if (this.objetivo.getBoundsInParent().getMinY()<5) {
+            if (a==1) {
+                objetivo.setRotate(preGrados);
+            }
+            else{
+                objetivo.setLayoutY(preEjeY);
+            }
+            bandera = false;
+        }
+        
+        if (this.objetivo.getBoundsInParent().getMinY()>405) {
+            if (a==1) {
+                objetivo.setRotate(preGrados);
+            }
+            else{
+                objetivo.setLayoutY(preEjeY);
+            }
+            bandera = false;
+        }
+        
+        if (this.objetivo.getBoundsInParent().getMaxX()<5) {
+            if (a==1) {
+                objetivo.setRotate(preGrados);
+            }
+            else{
+                objetivo.setLayoutX(preEjeX);
+            }
+            bandera = false;
+        }
+        
+        if (this.objetivo.getBoundsInParent().getMaxX()>775) {
+            if (a==1) {
+                objetivo.setRotate(preGrados);
+            }
+            else{
+                objetivo.setLayoutX(preEjeX);
+            }
+            bandera = false;
+        }
+                
+        if (this.objetivo.getBoundsInParent().getMaxY()<5) {
+            if (a==1) {
+                objetivo.setRotate(preGrados);
+            }
+            else{
+                objetivo.setLayoutY(preEjeY);
+            }
+            bandera = false;
+        }
+        if (this.objetivo.getBoundsInParent().getMaxY()>405) {
+            if (a==1) {
+                objetivo.setRotate(preGrados);
+            }
+            else{
+                objetivo.setLayoutY(preEjeY);
+            }
+            bandera = false;
+        }
+        if (!bandera) {
+            popUp("ERROR", "Sobrepasa los bordes");
+        }
+        return bandera;
     }
     
     /**
@@ -360,12 +468,48 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public void trasladar(MouseEvent event){
         String[] coordenadas = userXY.getText().split(",");
-        int ejeX = Integer.parseInt(coordenadas[0]);
-        int ejeY = Integer.parseInt(coordenadas[1]);
+        ejeX = Integer.parseInt(coordenadas[0]);
+        ejeY = Integer.parseInt(coordenadas[1]);
         
-        this.objetivo.setTranslateX(ejeX);
-        this.objetivo.setTranslateY(ejeY);
+        preEjeX = (int)objetivo.getLayoutX();
+        preEjeY = (int)objetivo.getLayoutY();
+        
+        this.objetivo.setLayoutX(preEjeX+ejeX);
+        this.objetivo.setLayoutY(preEjeY+ejeY);
+        
+        if (this.objetivo.getRotate()!=0.0 && this.objetivo.getRotate()!=180.0) {
+            verificarRotar(2);
+        }
+        else{
+            if (!this.verificarBordes()) {
+                popUp("ERROR", "Sobrepasa los bordes");
+                this.objetivo.setLayoutX(preEjeX);
+                this.objetivo.setLayoutY(preEjeY);
+            }
+        }
     }
+    
+    public boolean verificarBordes(){
+        if (this.objetivo.getLayoutX()<7) {
+            return false;
+        }
+                
+        if (this.objetivo.getLayoutY()<7) {
+            return false;
+        }
+        
+        int deltaX = (int)this.objetivo.getLayoutBounds().getWidth();
+        if (this.objetivo.getLayoutX()+deltaX>768) {
+            return false;
+        }
+        
+        int deltaY = (int)this.objetivo.getLayoutBounds().getHeight();
+        if (this.objetivo.getLayoutY()+deltaY>405) {
+            return false;
+        }
+        return true;
+    }
+    
     /**
      * Muestra el texto ingresado en "texto antiguo" en vivo,
      * luego de invertirse y mostrandolo en "texto nuevo"
@@ -526,4 +670,5 @@ public class FXMLDocumentController implements Initializable {
         }
         return txt;
     }
+    
 }
