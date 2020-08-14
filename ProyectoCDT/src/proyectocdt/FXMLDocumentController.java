@@ -280,7 +280,7 @@ public class FXMLDocumentController implements Initializable {
             }
         }
         
-        if (this.pAct==1) //pestaña de simbolos
+        if (this.pAct==1){ //pestaña de simbolos
             txt = this.textoSimbolo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
             textoSimbolo = verificarFrase(textoSimbolo, textoSimbolo.getCaretPosition()-1,event);
                 txt = this.textoSimbolo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
