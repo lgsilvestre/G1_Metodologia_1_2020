@@ -34,6 +34,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -249,18 +250,22 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public void mostrarTextField(KeyEvent event){
         String txt="";
-        if (this.pAct==1) { //pestaña de simbolos
-            txt = this.textoSimbolo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
-        }
-        if (this.pAct==2) { // pestaña de edicion
-            txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario en la pestaña edicion
-        }
-       //String txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario
-       //this.canvas.getGraphicsContext2D().fillText(txt, pAct, pAct); //mostrar texto en vivo en canvas
-       objetivo.setText(txt);
-       textoNuevo.setText(invertirFrase(txt)); // si se escribe en la pestaña edicion, se actualiza en vivo la frase invertida en texto nuevo
-       //System.out.println(""+txt+""); //mostrar texto en vivo en consola
-    }    
+            if (this.pAct==1) { //pestaña de simbolos
+                txt = this.textoSimbolo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
+                textoSimbolo = verificarFrase(textoSimbolo, textoSimbolo.getCaretPosition()-1,event);
+                txt = this.textoSimbolo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
+            }
+            if (this.pAct==2) { // pestaña de edicion
+                txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario en la pestaña edicion
+                textoEntrada = verificarFrase(textoEntrada, textoEntrada.getCaretPosition()-1,event);
+                txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
+            }
+           //String txt = this.textoEntrada.getText(); //captura el texto que ingresa el usuario
+           //this.canvas.getGraphicsContext2D().fillText(txt, pAct, pAct); //mostrar texto en vivo en canvas
+           objetivo.setText(txt);
+           textoNuevo.setText(invertirFrase(txt)); // si se escribe en la pestaña edicion, se actualiza en vivo la frase invertida en texto nuevo
+           //System.out.println(""+txt+""); //mostrar texto en vivo en consola
+    }
     
     /**
      * Permite cambia color y estilo del texto (tiza / plumon)
@@ -317,6 +322,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public void mostrarTextoInvertido(KeyEvent event){
         String txt = textoAntiguo.getText();
+        textoAntiguo = verificarFrase(textoAntiguo, textoAntiguo.getCaretPosition()-1,event);
+        txt = this.textoAntiguo.getText(); //captura el texto que ingresa el usuario en la pestaña simbolos
         objetivo.setText(txt); // muestra en la pizarra el cambio al escribir en textoAtiguo
         txt = invertirFrase(txt);
         textoNuevo.setText(txt);
@@ -417,5 +424,15 @@ public class FXMLDocumentController implements Initializable {
         parteInicial = txt.substring(0, pos);
         parteFinal = txt.substring(pos, txt.length());
         return parteInicial+ch+parteFinal;
+    }
+    private TextField verificarFrase(TextField txt, int pos, KeyEvent event){
+        if(!event.getCode().equals(KeyCode.ENTER) && !event.getCode().equals(KeyCode.BACK_SPACE) && !event.getCode().isArrowKey() && !event.isAltDown() && !event.isControlDown() && !event.isShiftDown()){
+            if (txt.getText().length() > 0 && pos >= 0) {
+                if (!Character.isAlphabetic(txt.getText().charAt(pos)) && !Character.isDigit(txt.getText().charAt(pos)) && !Character.isSpaceChar(txt.getText().charAt(pos))) {
+                    txt.deleteText(pos, pos+1);
+                }
+            }
+        }
+        return txt;
     }
 }
