@@ -20,14 +20,19 @@ package proyectocdt;
 import animatefx.animation.*;
 import com.sun.javafx.font.FontFactory;
 import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
@@ -42,9 +47,12 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  *
@@ -137,6 +145,8 @@ public class FXMLDocumentController implements Initializable {
     private int idCanvas=0;
     private int start=0;
     
+    
+    ArrayList<String> fraseDividida = new ArrayList<>();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {                
@@ -260,7 +270,22 @@ public class FXMLDocumentController implements Initializable {
        objetivo.setText(txt);
        textoNuevo.setText(invertirFrase(txt)); // si se escribe en la pestaña edicion, se actualiza en vivo la frase invertida en texto nuevo
        //System.out.println(""+txt+""); //mostrar texto en vivo en consola
+       
     }    
+    
+    /**
+     * Permite dividir el texto
+     * @param texto
+    */
+    public void dividirText(String texto){
+ 
+        String[] palabras = texto.split(" ");
+
+        for(int i =0; i < palabras.length; i++ ){
+            fraseDividida.add(palabras[i]);
+            fraseDividida.add(" ");
+            }
+    }
     
     /**
      * Permite cambia color y estilo del texto (tiza / plumon)
@@ -276,7 +301,7 @@ public class FXMLDocumentController implements Initializable {
         }else{
              objetivo.setFont(tiza);                
              objetivo.setFill(Color.WHITE);               
-        }                   
+        }   
     }
     
     /**
@@ -292,7 +317,7 @@ public class FXMLDocumentController implements Initializable {
             this.objetivo.setRotate(gradosUser);
         }
         else{
-            //Deberiamos agregar un mensaje para el usuario del "porque no rota"
+            popUp("ERROR","Los grados deben ser entre 0 y 360");
         }
     }
     
@@ -418,4 +443,23 @@ public class FXMLDocumentController implements Initializable {
         parteFinal = txt.substring(pos, txt.length());
         return parteInicial+ch+parteFinal;
     }
+    
+    
+    public void popUp(String title, String menssaje) {
+        final Stage dialog = new Stage();                      
+        dialog.setTitle(title);
+        VBox dialogVbox = new VBox(20);
+        Text msj = new Text("/ ! \\  "+menssaje+"  / ! \\");
+        msj.setScaleX(1.5);
+        msj.setScaleY(1.2);
+        dialogVbox.getChildren().add(msj);
+        dialogVbox.setAlignment(Pos.CENTER);
+        Scene dialogScene = new Scene(dialogVbox, 400, 80);
+        dialog.setScene(dialogScene);
+        dialog.setResizable(false);
+        dialog.setAlwaysOnTop(true);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        Toolkit.getDefaultToolkit().beep();
+        dialog.show();        
+    }  
 }
